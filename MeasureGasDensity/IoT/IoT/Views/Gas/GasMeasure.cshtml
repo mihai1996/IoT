@@ -1,0 +1,107 @@
+﻿@model  IoT.Models.TwiceTableModel
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+</head>
+<body>
+
+    
+
+    <div class="container">
+        <div id="faq" role="tablist" aria-multiselectable="true">
+
+            <div class="panel panel-default">
+                <div style="cursor:pointer;" class="panel-heading" role="tab" id="questionOne" data-toggle="collapse" data-parent="#faq" href="#answerOne" aria-expanded="false" aria-controls="answerOne">
+                    <h5 style="text-align:center" class="panel-title">
+                        <a>
+                            Măsurări de gaze
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="answerOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionOne">
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th style="text-align: center;">
+                                        Valoarea Sensorului
+                                    </th>
+                                    <th style="text-align: center;">
+                                        Înregistrări
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Measures)
+                                {
+                                    <tr>
+
+                                        <td style="text-align: center;">
+                                            @Html.DisplayFor(modelItem => item.GasValue)
+                                        </td>
+                                        <td style="text-align: center;">
+
+                                            @item.Registered.ToString("HH:mm MM/dd/yyyy")
+                                            
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div style="cursor:pointer;" class="panel-heading" role="tab" id="questionTwo" data-toggle="collapse" data-parent="#faq" href="#answerTwo" aria-expanded="false" aria-controls="answerTwo">
+                    <h5 style="text-align:center" class="panel-title">
+                        <a>
+                            Situații de alarmă
+                        </a>
+                    </h5>
+                </div>
+                <div id="answerTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questionTwo">
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th style="text-align: center;">
+                                        Valoarea Sensorului
+                                    </th>
+                                    <th style="text-align: center;">
+                                        Înregistrări
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Alerts)
+                                {
+                                    <tr>
+
+                                        <td style="text-align: center;">
+                                            @Html.DisplayFor(modelItem => item.GasValue)
+                                        </td>
+                                        <td style="text-align: center;">
+
+                                            @item.Registered.ToString("HH:mm MM/dd/yyyy")
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
