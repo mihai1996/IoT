@@ -10,10 +10,10 @@ namespace IoT.Controllers
     public class LogareController : Controller
     {
         //GET: Logare
-       [HttpGet]
-        public ActionResult Login()
+        [HttpGet]
+        public ActionResult Login(Login log)
         {
-            return View();
+            return View(log);
         }
 
     }

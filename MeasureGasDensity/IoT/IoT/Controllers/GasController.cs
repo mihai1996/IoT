@@ -17,8 +17,8 @@ namespace IoT.Controllers
         {
             return View();
         }
+
         
-        // GET: Gas
         [HttpPost]
         public ActionResult GasMeasure(Login log) // datele de la logare vin prin post in action
         {
@@ -28,7 +28,7 @@ namespace IoT.Controllers
                 var model = new TwiceTableModel();
 
                 string measuresSQL = "SELECT TOP 10 * FROM Measures ORDER BY Registered DESC";
-                string alertsSQL = "Select * FROM Alerts";
+                string alertsSQL = "SELECT TOP 10 * FROM Alerts ORDER BY Registered DESC";
 
                 using (SqlConnection conn = new SqlConnection(Settings.connection))
                 {
