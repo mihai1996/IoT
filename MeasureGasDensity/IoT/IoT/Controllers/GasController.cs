@@ -1,11 +1,8 @@
 ﻿using Dapper;
 using IoT.Models;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace IoT.Controllers
@@ -19,10 +16,10 @@ namespace IoT.Controllers
         }
 
         
-        [HttpPost]
+        [HttpGet]
         public ActionResult GasMeasure(Login log) // datele de la logare vin prin post in action
         {
-            if (log.Username == "admin" && log.Password == "mihaiernest123") // se face validare
+            if (log.Username == Settings.LoginCredentials.Login && log.Password == Settings.LoginCredentials.Password) // se face validare
             {
                 // totul e ok. pregatim datele pentru view si le aratam.
                 var model = new TwiceTableModel();
@@ -30,7 +27,7 @@ namespace IoT.Controllers
                 string measuresSQL = "SELECT TOP 10 * FROM Measures ORDER BY Registered DESC";
                 string alertsSQL = "SELECT TOP 10 * FROM Alerts ORDER BY Registered DESC";
 
-                using (SqlConnection conn = new SqlConnection(Settings.connection))
+                using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
                 {
                     model.Measures = conn.Query<Measure>(measuresSQL).ToList();
                     model.Alerts = conn.Query<Alert>(alertsSQL).ToList();

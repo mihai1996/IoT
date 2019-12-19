@@ -16,3 +16,15 @@ textarea {
     max-width: 280px;
 }
 
+.navbar {
+    max-height: 60px !important;
+}
+
+.navbar-brand {
+    padding: 7px 15px !important;
+}
+
+.refresh-button {
+    width: 100px;
+    margin-top:-15px;
+}
