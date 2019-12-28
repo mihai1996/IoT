@@ -62,3 +62,9 @@ span.psw {
         width: 100%;
     }
 }
+
+.Limit {
+    float: right;
+    text-align: center;
+    border-radius: 3px;
+}

@@ -10,5 +10,7 @@ namespace IoT.Models
         public IEnumerable<IoT.Models.Measure> Measures { get; set; }
 
         public IEnumerable<IoT.Models.Alert> Alerts { get; set; }
+
+        public int LIMIT { get; set; }
     }
 }

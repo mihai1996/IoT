@@ -115,6 +115,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Alert.cs" />
+    <Compile Include="Models\Limit.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Measure.cs" />
     <Compile Include="Models\TwiceTableModel.cs" />
