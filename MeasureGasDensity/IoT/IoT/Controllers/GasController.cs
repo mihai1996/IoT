@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using IoT.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -59,5 +60,28 @@ namespace IoT.Controllers
                 return Json(limit);
             }
         }
+
+        [HttpPost]
+        public ActionResult GetLastMeasure()
+        {
+            string lastMeasureSQL = "SELECT GasValue, Registered FROM LastMeasure";
+
+            using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
+            {
+                var lastMeasure = conn.Query<LastMeasure>(lastMeasureSQL).FirstOrDefault();
+                //var result = new { data1 = lastMeasure.GasValue, data2 = lastMeasure.Registered };
+                var viewModel = new LastMeasureViewModel();
+                if (lastMeasure != null)
+                {
+                    viewModel.Id = lastMeasure.Id;
+                    viewModel.GasValue = lastMeasure.GasValue;
+                    viewModel.Registered = lastMeasure.Registered.ToString("hh:mm:ss dd/MM/yyyy");
+                }
+                
+                return Json(viewModel);
+            }
+
+        }
+
     }
 }

@@ -1,54 +1,25 @@
 ﻿@model  IoT.Models.TwiceTableModel
-    
+
 @{
     ViewBag.Title = "Propane Detector";
 }
 
+
 <div class="container">
-    <button class="refresh-button btn" type="submit" onClick="refreshPage()">
-        <i class="fas fa-sync"> Refresh</i>
-    </button>
-
-    @*<div class="Limit">
-
-
-            <label  title="Limita de gaz"> Limită: </label>
-            <p id="limita" ></p>
-
-
-        </div>*@
-    @*<button type="button" class="btn refresh-button" data-toggle="collapse" data-target="#limit" style="float:right;">Limit</button>
-
-        <div id="limit" class="collapse">
-            @foreach (var item in Model.Limits)
-            {
-            <div id="limite" style=" margin-top: 30px; margin-right: 36px; float:right">
-                @item.LIMIT
-            </div>
-
-            }
-        </div>*@
-
-    @*<button id="btn" type="button" class="btn refresh-button" style="float:right">Limit</button>
-
-
-
-
-            @foreach (var item in Model.Limits)
-            {
-        <div style=" margin-top: 30px; margin-right: 36px; float:right">
-            <p id="limit"></p>
-            <p id="limitt"> @item.LIMIT</p>
-        </div>
-
-            }*@
-   
+    <div class="text-center">
+        <p id="Registered" style="font-size:16px;">Ultima măsurare: </p>
+        <p id="GasValue" style="font-size:16px; font-style:italic; font-weight:bold;"></p>
+    </div>
+    <br /><br />
+    <div class="top-left" style="max-width: 300px; margin-bottom: -44px;">
+        <button class="refresh-button btn" type="submit" onClick="refreshPage()">
+            <i class="fas fa-sync"> Refresh</i>
+        </button>
+    </div>
     <div class="pull-right" style="font-size: 18px">
         <label title="Limita de gaz"> Limită: </label>
         <p id="limit" style="text-align:center; color: forestgreen; font-weight: bold; font-style: italic; border: 1px solid #d46608;">@Model.LIMIT</p>
     </div>
-
-
 </div>
 
 <br />
@@ -144,20 +115,39 @@
 
 <script>
     $(document).ready(function () {
-        
+
+        var limit = '@Model.LIMIT';
+
+        LastMeasure();
         setInterval(GasLimit, 40000);
-        
+        setInterval(LastMeasure, 40000);
+
         function GasLimit() {
-            
+
             $.post("/Gas/GetGasLimit", {}, function (data) {
-                
-                 $("#limit").html(data);
-                
+
+                $("#limit").html(data);
                 console.log(data);
+                limit = data;
             });
             
         }
-        
+
+        function LastMeasure() {
+
+            $.post("/Gas/GetLastMeasure", {}, function (data) {
+                
+                $("#GasValue").html(data.GasValue);
+                $("#Registered").html("Ultima măsurare: " + data.Registered);
+
+
+                if (data.GasValue < limit) {
+                    $("#GasValue").css({ "color": "green" });
+                } else {
+                    $("#GasValue").css({ "color": "red" });
+                }
+            });
+
+        }
     });
-    
 </script>

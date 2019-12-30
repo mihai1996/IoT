@@ -138,3 +138,4 @@ C:\IoT\MeasureGasDensity\IoT\IoT\obj\Release\IoT.csproj.CoreCompileInputs.cache
 C:\IoT\MeasureGasDensity\IoT\IoT\obj\Release\IoT.csproj.CopyComplete
 C:\IoT\MeasureGasDensity\IoT\IoT\obj\Release\IoT.dll
 C:\IoT\MeasureGasDensity\IoT\IoT\obj\Release\IoT.pdb
+C:\IoT\MeasureGasDensity\IoT\IoT\obj\Release\IoT.csprojAssemblyReference.cache
