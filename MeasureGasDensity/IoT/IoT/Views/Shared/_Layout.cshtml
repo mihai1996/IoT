@@ -17,13 +17,30 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-               
-                <a href="/Logare/Login" class="navbar-brand">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/Gas/GasMeasure" class="navbar-brand">
                     <img src="https://i.imgur.com/1CbYUHF.png" height="36" style="margin-top:-10px" />
                     Butane Detector
                 </a>
             </div>
-            
+            <div class="navbar-collapse pull-right">
+                
+                <ul class="nav navbar-nav">
+                    @if (Session["uname"] != null && Session["psw"] != null)
+                    {
+                        <li>
+                            <a href="/Logare/Login">
+                                <img src="https://image.flaticon.com/icons/svg/1716/1716282.svg" height="36" style="margin-top:-13px" />
+                            </a>
+                        </li>
+                    }
+                    </ul>
+                
+            </div>
         </div>
     </div>
 

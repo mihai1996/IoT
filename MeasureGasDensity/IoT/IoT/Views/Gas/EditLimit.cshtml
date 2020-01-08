@@ -1,0 +1,25 @@
+﻿@model IoT.Models.Limit
+@{
+    ViewBag.Title = "EditLimit";
+}
+
+
+@*<div class="container">
+        @Html.ActionLink("Back to list", "GasMeasure", "Gas", new { id = "#" })
+    </div>*@
+@Html.ActionLink("Back to list", "GasMeasure", "Gas", new { id = "#" })
+<form style="border:none" action="/Gas/EditLimit" method="post">
+    <div class="container">
+
+
+        @Html.HiddenFor(m => m.Id)
+        @Html.LabelFor(m => m.LIMIT, "Editează Limita: ")
+        @Html.EditorFor(m => m.LIMIT, new { htmlAttributes = new { @class = "editlimit" } }) 
+        <input style="background-color: #d46608;" type="submit" value="Save" />
+        <br />
+    </div>
+
+    
+
+
+</form>

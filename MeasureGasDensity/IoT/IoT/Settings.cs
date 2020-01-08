@@ -1,4 +1,5 @@
-﻿namespace IoT
+﻿
+namespace IoT
 {
     public class Credentials
     {
@@ -14,6 +15,5 @@
             Login = "admin",
             Password = "mihaiernest123"
         };
-
     }
 }

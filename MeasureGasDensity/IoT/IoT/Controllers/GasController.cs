@@ -12,16 +12,18 @@ namespace IoT.Controllers
     public class GasController : Controller
     {
 
-        public ActionResult Index()
+        public ActionResult Index(TwiceTableModel model)
         {
-            return View();
+            var a = model.Limit.LIMIT;
+            return View(a);
         }
 
 
-        [HttpPost]
-        public ActionResult GasMeasure(Login log) // datele de la logare vin prin post in action
+        [HttpGet]
+        public ActionResult GasMeasure() // datele de la logare vin prin post in action
         {
-            if (log.Username == Settings.LoginCredentials.Login && log.Password == Settings.LoginCredentials.Password) // se face validare
+
+            if (Session["uname"] != null && Session["psw"] != null)
             {
                 // totul e ok. pregatim datele pentru view si le aratam.
                 var model = new TwiceTableModel();
@@ -32,22 +34,19 @@ namespace IoT.Controllers
 
                 using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
                 {
+
                     model.Measures = conn.Query<Measure>(measuresSQL).ToList();
                     model.Alerts = conn.Query<Alert>(alertsSQL).ToList();
-                    model.LIMIT = conn.Query<int>(limitSQL).FirstOrDefault();
-
+                    model.Limit = conn.Query<Limit>(limitSQL).FirstOrDefault();
                     return View(model);
                 }
-
             }
-            else // daca validarea nu este corecta
+            else
             {
-                Console.WriteLine("Invalid");
-                return RedirectToAction("Login", "Logare"); // redirect la login
+                return RedirectToAction("Login", "Logare");
             }
-
         }
-
+        
         [HttpPost]
         public ActionResult GetGasLimit()
         {
@@ -55,9 +54,17 @@ namespace IoT.Controllers
 
             using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
             {
-                int limit = conn.Query<int>(limitSQL).FirstOrDefault();
+                var limit = conn.Query<Limit>(limitSQL).FirstOrDefault();
 
-                return Json(limit);
+                var limitView = new LimitViewModel();
+
+                if(limit != null)
+                {
+                    limitView.LIMIT = limit.LIMIT;
+                    limitView.Id = limit.Id;
+                }
+
+                return Json(limitView);
             }
         }
 
@@ -69,18 +76,49 @@ namespace IoT.Controllers
             using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
             {
                 var lastMeasure = conn.Query<LastMeasure>(lastMeasureSQL).FirstOrDefault();
-                //var result = new { data1 = lastMeasure.GasValue, data2 = lastMeasure.Registered };
+    
                 var viewModel = new LastMeasureViewModel();
                 if (lastMeasure != null)
                 {
                     viewModel.Id = lastMeasure.Id;
                     viewModel.GasValue = lastMeasure.GasValue;
-                    viewModel.Registered = lastMeasure.Registered.ToString("hh:mm:ss dd/MM/yyyy");
+                    viewModel.Registered = lastMeasure.Registered.ToString("HH:mm MM/dd/yyyy");
                 }
                 
                 return Json(viewModel);
             }
+        }
 
+        [HttpGet]
+        public ActionResult EditLimit(int id)
+        {
+            if (Session["uname"] != null && Session["psw"] != null)
+            {
+                Limit _limit = new Limit();
+                string limSQL = "SELECT * FROM Limit Where @Id = @id";
+                using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
+                {
+                    _limit = conn.Query<Limit>(limSQL, new { id }).FirstOrDefault();
+                }
+                return View(_limit);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logare");
+            }     
+        }
+
+        [HttpPost]
+        public ActionResult EditLimit(Limit _limit)
+        {
+           string editLimitSQL = "UPDATE Limit SET LIMIT = @LIMIT, Id = @Id";
+
+            using (SqlConnection conn = new SqlConnection(Settings.DB_CONNECTION_STRING))
+            {
+                int rowsAffected = conn.Execute(editLimitSQL, _limit);
+            }
+
+            return RedirectToAction("GasMeasure", "Gas");
         }
 
     }

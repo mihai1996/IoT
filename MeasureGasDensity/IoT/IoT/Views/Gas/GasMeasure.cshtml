@@ -4,7 +4,6 @@
     ViewBag.Title = "Propane Detector";
 }
 
-
 <div class="container">
     <div class="text-center">
         <p id="Registered" style="font-size:16px;">Ultima măsurare: </p>
@@ -18,7 +17,19 @@
     </div>
     <div class="pull-right" style="font-size: 18px">
         <label title="Limita de gaz"> Limită: </label>
-        <p id="limit" style="text-align:center; color: forestgreen; font-weight: bold; font-style: italic; border: 1px solid #d46608;">@Model.LIMIT</p>
+        <p id="limit" style="text-align:center; color: forestgreen; font-weight: bold; font-style: italic; border: 1px solid #d46608;"></p>
+    </div>
+    <br /><br /><br />
+    <div class="pull-right">
+        @Html.HiddenFor(m => m.Limit.Id)
+        <div style="margin-right:-60px; text-align: center;">
+            <a  href="/Gas/EditLimit?id=@Model.Limit.Id">
+                Edit
+                <img src="https://image.flaticon.com/icons/svg/84/84380.svg" height="16" />
+
+            </a>
+        </div>
+        
     </div>
 </div>
 
@@ -115,9 +126,8 @@
 
 <script>
     $(document).ready(function () {
-
-        var limit = '@Model.LIMIT';
-
+        var limit = '@Model.Limit.LIMIT';
+        GasLimit();
         LastMeasure();
         setInterval(GasLimit, 40000);
         setInterval(LastMeasure, 40000);
@@ -126,17 +136,17 @@
 
             $.post("/Gas/GetGasLimit", {}, function (data) {
 
-                $("#limit").html(data);
-                console.log(data);
-                limit = data;
+                $("#limit").html(data.LIMIT);
+                //console.log(data.LIMIT);
+                limit = data.LIMIT;
             });
-            
+
         }
 
         function LastMeasure() {
 
             $.post("/Gas/GetLastMeasure", {}, function (data) {
-                
+
                 $("#GasValue").html(data.GasValue);
                 $("#Registered").html("Ultima măsurare: " + data.Registered);
 

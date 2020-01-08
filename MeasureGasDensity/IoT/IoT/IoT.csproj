@@ -117,6 +117,8 @@
     <Compile Include="Models\Alert.cs" />
     <Compile Include="Models\LastMeasure.cs" />
     <Compile Include="Models\LastMeasureViewModel.cs" />
+    <Compile Include="Models\Limit.cs" />
+    <Compile Include="Models\LimitViewModel.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Measure.cs" />
     <Compile Include="Models\TwiceTableModel.cs" />
@@ -131,11 +133,12 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Gas\GasMeasure.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Gas\AlertTable.cshtml" />
     <Content Include="Views\Gas\Index.cshtml" />
     <Content Include="Views\Logare\Login.cshtml" />
+    <Content Include="Views\Gas\EditLimit.cshtml" />
+    <Content Include="Views\Gas\GasMeasure.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

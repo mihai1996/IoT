@@ -68,3 +68,8 @@ span.psw {
     text-align: center;
     border-radius: 3px;
 }
+
+.editlimit{
+    width:50px;
+    text-align:center;
+}

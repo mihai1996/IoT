@@ -18,6 +18,7 @@ namespace IoT
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Logare", action = "Login", id = UrlParameter.Optional }
             );
+
         }
     }
 }

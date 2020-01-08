@@ -11,10 +11,26 @@ namespace IoT.Controllers
     {
         //GET: Logare
         [HttpGet]
-        public ActionResult Login(Login log)
+        public ActionResult Login()
         {
-            return View(log);
+            Session.Clear();
+            return View();
         }
 
+        [HttpPost]
+        public ActionResult Login(Login log)
+        {
+            Session["uname"] = log.Username;
+            Session["psw"] = log.Password;
+            
+            if ((string)Session["uname"] == Settings.LoginCredentials.Login && (string)Session["psw"] == Settings.LoginCredentials.Password)
+            {
+                return RedirectToAction("GasMeasure", "Gas");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
     }
 }

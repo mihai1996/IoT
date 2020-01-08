@@ -11,7 +11,7 @@ namespace IoT.Models
 
         public IEnumerable<IoT.Models.Alert> Alerts { get; set; }
 
-        public int LIMIT { get; set; }
+        public Limit Limit { get; set; }
 
     }
 }
